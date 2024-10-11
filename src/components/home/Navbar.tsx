@@ -60,13 +60,22 @@ const Navbar = () => {
                                           ))
                                     }
                               </ul>
-                              <Button className="md:text-lg uppercase bg-red-700 hover:bg-red-900  py-3 md:py-7 px-3 md:px-7 rounded-none">Login</Button>
-                              <Button className='block md:hidden' onClick={() => setIsShow(prev => !prev)}>
+                              <Link href={"/login"}>
+                                    <Button
+                                          className="md:text-lg uppercase bg-red-700 hover:bg-red-900  py-3 md:py-7 px-3 md:px-7 rounded-none"
+                                    >
+                                          Login
+                                    </Button>
+                              </Link>
+                              <Button
+                                    className='block md:hidden'
+                                    onClick={() => setIsShow(prev => !prev)}
+                              >
                                     <HamburgerMenuIcon />
                               </Button>
                         </div>
                         <div className={`${isShow ? "block absolute left-0 right-0 top-[90px]" : "hidden -top-[90px]"} bg-black  pl-5 pb-5 transition-all duration-500`}>
-                              <NavLinksForSmallScreen setIsShow={setIsShow}/>
+                              <NavLinksForSmallScreen setIsShow={setIsShow} />
                         </div>
                   </div>
             </nav>
