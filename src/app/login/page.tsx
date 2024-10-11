@@ -14,7 +14,7 @@ const LoginPage = () => {
                   }}
                   className="min-h-[100vh] w-full bg-cover bg-center bg-no-repeat flex justify-center items-center"
             >
-                  <div className="w-[98%] sm:w-[70%] md:w-[50%] xl:w-[30%] mx-auto bg-black/80 backdrop-blur-sm p-20">
+                  <div className="w-[98%] sm:w-[70%] md:w-[50%] xl:w-[30%] mx-auto bg-black/80 backdrop-blur-sm p-10 md:p-20">
                         <div className="flex flex-col items-center justify-center">
                               <Link href={"/"}>
                                     <Image src={Logo} alt="brand logo" />
@@ -23,16 +23,16 @@ const LoginPage = () => {
                               <h2 className="text-white text-3xl uppercase font-bold">Login here</h2>
                         </div>
 
-                        <form className="flex flex-col gap-7 mt-10">
+                        <form className="flex flex-col gap-4 md:gap-7 mt-5 md:mt-10">
                               <Input
                                     type="email"
                                     placeholder="Email"
-                                    className="text-lg py-7 px-5 rounded-none bg-white border-none " required
+                                    className="text-base md:text-lg py-5 md:py-7 px-3 md:px-5 rounded-none bg-white border-none " required
                               />
                               <Input
                                     type="password"
                                     placeholder="Password"
-                                    className="text-lg py-7 px-5 rounded-none bg-white border-none " required
+                                    className="text-base md:text-lg py-5 md:py-7 px-3 md:px-5 rounded-none bg-white border-none " required
                               />
                               <p 
                               className="text-white"
