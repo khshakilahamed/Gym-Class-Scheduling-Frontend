@@ -16,7 +16,7 @@ export const authApi = baseApi.injectEndpoints({
       async onQueryStarted(_arg, { queryFulfilled, dispatch }) {
         const result = await queryFulfilled;
         const accessToken = result?.data?.accessToken;
-      //   console.log(accessToken);
+        //   console.log(accessToken);
         storeUserInfo(accessToken);
         const userInfo: UserInfo | null = getUserInfo();
         // console.log(getUserInfo())
@@ -60,10 +60,35 @@ export const authApi = baseApi.injectEndpoints({
           })
         );
       },
-      
+
+      invalidatesTags: [tagTypes.auth],
+    }),
+    // Get my profile
+    myProfile: build.query({
+      query: () => ({
+        url: `${AUTH_URL}/my-profile`,
+        method: "GET",
+      }),
+      providesTags: [tagTypes.auth],
+    }),
+    // Update My Profile
+    updateMyProfile: build.mutation({
+      query: (data) => {
+        return {
+          url: `${AUTH_URL}/update-my-profile`,
+          method: "PATCH",
+          data: data,
+          // contentType: "multipart/form-data",
+        };
+      },
       invalidatesTags: [tagTypes.auth],
     }),
   }),
 });
 
-export const { useUserLoginMutation, useUserRegisterMutation } = authApi;
+export const {
+  useUserLoginMutation,
+  useUserRegisterMutation,
+  useMyProfileQuery,
+  useUpdateMyProfileMutation,
+} = authApi;
