@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { initialLoginData } from "../login/page";
 import { storeUserInfo } from "@/services/auth.service";
 import { useUserRegisterMutation } from "@/redux/api/authApi";
@@ -34,9 +34,12 @@ const RegisterPage = () => {
 
       const errorMessage = (loginError as ApiError)?.data?.message;
 
-      if (errorMessage) {
-            setError(errorMessage)
-      }
+      // Use useEffect to update the error state when errorMessage changes
+      useEffect(() => {
+            if (errorMessage) {
+                  setError(errorMessage);
+            }
+      }, [errorMessage]);
 
       const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
             // console.log(e.target.name, e.target.value);
@@ -69,10 +72,12 @@ const RegisterPage = () => {
 
             setFormInputError(null);
 
+            // console.log(formData);
+
             try {
                   const res = await userRegister(formData).unwrap();
 
-                  console.log(res);
+                  // console.log(res);
 
                   if (res?.accessToken) {
                         storeUserInfo({ accessToken: res?.accessToken });
@@ -81,12 +86,8 @@ const RegisterPage = () => {
 
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                  // console.log(JSON.stringify(error));
-                  if (error!.status === 404) {
-                        setError("User does not found");
-                  }
+                  setError(error?.data?.message);
             }
-
       }
 
       return (

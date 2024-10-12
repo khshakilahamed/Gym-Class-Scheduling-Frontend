@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Separator } from "@/components/ui/separator"
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useUserLoginMutation } from "@/redux/api/authApi";
 import { Loader2 } from "lucide-react";
 import { storeUserInfo } from "@/services/auth.service";
@@ -32,9 +32,12 @@ const LoginPage = () => {
 
       const errorMessage = (loginError as ApiError)?.data?.message;
 
-      if (errorMessage) {
-            setError(errorMessage)
-      }
+      // Use useEffect to update the error state when errorMessage changes
+      useEffect(() => {
+            if (errorMessage) {
+                  setError(errorMessage);
+            }
+      }, [errorMessage]);
 
       const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
             // console.log(e.target.name, e.target.value);
@@ -71,10 +74,7 @@ const LoginPage = () => {
 
                   // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
-                  console.log(JSON.stringify(error));
-                  if (error!.status === 404) {
-                        setError("User does not found");
-                  }
+                  setError(error?.data?.message);
             }
 
       }
