@@ -32,6 +32,20 @@ export type ApiError = {
       };
 };
 
+
+// Define the user type with your custom fields
+export type UserInfo = {
+      userId?: string;
+      email?: string;
+      role?: string;
+};
+
+// Define the state type
+export interface AuthState {
+      accessToken?: string;
+      user?: UserInfo;
+}
+
 export interface IRole {
       id: string;
       title: string;

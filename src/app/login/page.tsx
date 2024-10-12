@@ -13,7 +13,7 @@ import { Loader2 } from "lucide-react";
 import { storeUserInfo } from "@/services/auth.service";
 import { ApiError } from "@/types/global";
 
-const initialLoginData = {
+export const initialLoginData = {
       email: "",
       password: ""
 }
@@ -24,17 +24,21 @@ type FormInputErrorType = {
 } | null
 
 const LoginPage = () => {
-      const [loginData, setLoginData] = useState({ ...initialLoginData });
+      const [formData, setFormData] = useState({ ...initialLoginData });
       const [formError, setFormInputError] = useState<FormInputErrorType>(null);
+      const [error, setError] = useState("");
 
-      const [userLogin, { error, isLoading }] = useUserLoginMutation();
+      const [userLogin, { error: loginError, isLoading }] = useUserLoginMutation();
 
-      console.log("error", error);
-      const errorMessage = (error as ApiError)?.data?.message;
+      const errorMessage = (loginError as ApiError)?.data?.message;
+
+      if (errorMessage) {
+            setError(errorMessage)
+      }
 
       const handleOnchange = (e: React.ChangeEvent<HTMLInputElement>) => {
             // console.log(e.target.name, e.target.value);
-            setLoginData(prev => ({
+            setFormData(prev => ({
                   ...prev,
                   [e.target.name]: e.target.value
             }));
@@ -42,13 +46,13 @@ const LoginPage = () => {
 
       const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
             e.preventDefault();
-            if (!loginData['email']) {
+            if (!formData['email']) {
                   return setFormInputError({
                         field: 'email',
                         error: true,
                   })
             }
-            if (!loginData['password']) {
+            if (!formData['password']) {
                   return setFormInputError({
                         field: 'password',
                         error: true,
@@ -58,15 +62,19 @@ const LoginPage = () => {
             setFormInputError(null);
 
             try {
-                  const res = await userLogin(loginData).unwrap();
+                  const res = await userLogin(formData).unwrap();
 
                   if (res?.accessToken) {
                         storeUserInfo({ accessToken: res?.accessToken });
-                        setLoginData({ ...initialLoginData })
+                        setFormData({ ...initialLoginData })
                   }
 
-            } catch (error) {
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            } catch (error: any) {
                   console.log(JSON.stringify(error));
+                  if (error!.status === 404) {
+                        setError("User does not found");
+                  }
             }
 
       }
@@ -95,7 +103,7 @@ const LoginPage = () => {
                                     <Input
                                           type="email"
                                           name="email"
-                                          value={loginData["email"]}
+                                          value={formData["email"]}
                                           placeholder="Email"
                                           className="text-base md:text-lg py-5 md:py-7 px-3 md:px-5 rounded-none bg-white border-none "
                                           onChange={handleOnchange}
@@ -109,7 +117,7 @@ const LoginPage = () => {
                                     <Input
                                           type="password"
                                           name="password"
-                                          value={loginData["password"]}
+                                          value={formData["password"]}
                                           placeholder="Password"
                                           className="text-base md:text-lg py-5 md:py-7 px-3 md:px-5 rounded-none bg-white border-none "
                                           onChange={handleOnchange}
@@ -131,7 +139,7 @@ const LoginPage = () => {
 
 
                               <div className="text-center">
-                                    {errorMessage && <p className="text-red-400">{errorMessage}</p>}
+                                    {error && <p className="text-red-400">{error}</p>}
                                     <Button
                                           className="text-lg uppercase bg-red-700 hover:bg-red-900 py-7 px-7 rounded-none"
                                           disabled={isLoading}
@@ -142,7 +150,6 @@ const LoginPage = () => {
                                                       Please wait
                                                 </> : "Login"
                                           }
-
                                     </Button>
                               </div>
                         </form>
