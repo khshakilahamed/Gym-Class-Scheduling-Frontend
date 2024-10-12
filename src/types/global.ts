@@ -46,7 +46,7 @@ export interface AuthState {
 }
 
 export type IUser = {
-  id: string;
+  _id: string;
   name: string;
   email: string;
   password: string;
@@ -55,7 +55,7 @@ export type IUser = {
 };
 
 export type ITimeSlot = {
-  id: string;
+  _id: string;
   startingTime: string;
   endingTime: string;
   createdBy: IUser | string;
@@ -63,7 +63,7 @@ export type ITimeSlot = {
 };
 
 export type IClassSchedule = {
-  id: string;
+  _id: string;
   title: string;
   day: string;
   maxTrainees: number;
@@ -75,10 +75,11 @@ export type IClassSchedule = {
 };
 
 export interface IBooking {
-  id: string;
+  _id: string;
   classScheduleId: IClassSchedule | string;
   userId: IUser | string;
   date: string;
+  isCancel: boolean;
   createdAt: IUser | string;
   updatedAt: IUser | string;
 }

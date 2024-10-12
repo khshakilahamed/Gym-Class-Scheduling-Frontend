@@ -25,9 +25,9 @@ export const traineeMenuList = (pathname: string) => {
           submenus: [],
         },
         {
-          href: "/dashboard/trainee/bookings",
+          href: "/dashboard/trainee/create-booking",
           label: "Create Booking",
-          active: pathname.includes("/dashboard/trainee/bookings"),
+          active: pathname.includes("/dashboard/trainee/create-booking"),
           icon: Plus,
           submenus: [],
         },
