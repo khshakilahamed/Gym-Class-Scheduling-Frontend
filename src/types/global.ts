@@ -45,142 +45,41 @@ export interface AuthState {
   user?: UserInfo;
 }
 
-export interface IRole {
+export type IUser = {
+  id: string;
+  name: string;
+  email: string;
+  password: string;
+  avatar?: string;
+  role: string;
+};
+
+export type ITimeSlot = {
+  id: string;
+  startingTime: string;
+  endingTime: string;
+  createdBy: IUser | string;
+  updatedBy: IUser | string;
+};
+
+export type IClassSchedule = {
   id: string;
   title: string;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface IUser {
-  id: string;
-  email: string;
-  roleId: string;
-  role: IRole;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface ICustomer {
-  id: string;
-  firstName: string;
-  lastName: string;
-  profilePicture: string;
-  gender: string;
-  contactNo: string;
-  emergencyContactNo: string;
-  presentAddress: string;
-  permanentAddress: string;
-  userId: string;
-  user: IUser;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface ICustomerAgent {
-  id: string;
-  firstName: string;
-  lastName: string;
-  profilePicture: string;
-  gender: string;
-  contactNo: string;
-  emergencyContactNo: string;
-  presentAddress: string;
-  permanentAddress: string;
-  userId: string;
-  user: IUser;
-  email: string;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface IReview {
-  id: string;
-  rating: number;
-  comment: string;
-  customerId: string;
-  customer: ICustomer;
-  createdAt: string;
-  updatedAt: string;
-}
-
-export interface IService {
-  id: string;
-  title: string;
-  price: number;
-  image: string;
-  reviews: IReview[];
-  description: string;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface ITimeSlot {
-  id: string;
-  startTime: string;
-  endTime: string;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface IBlog {
-  id: string;
-  title: string;
-  image: string;
-  description: string;
-  customerAgentId: string;
-  customerAgent: ICustomerAgent;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
-
-export interface IFaq {
-  id: string;
-  question: string;
-  answer: string;
-  customerAgentId: string;
-  customerAgent: ICustomerAgent;
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
+  day: string;
+  maxTrainees: number;
+  trainers: IUser[] | string[];
+  timeSlotId: ITimeSlot | string;
+  duration: number;
+  createdBy: IUser;
+  updatedBy: IUser;
+};
 
 export interface IBooking {
   id: string;
-  bookingDate: string;
-  bookingStatus: string;
-  issueDescription: string;
-  issueStatus: string;
-  readyToReview: boolean;
-  customerId: string;
-  customer: ICustomer[];
-  customerAgentId: string;
-  customerAgent: ICustomerAgent;
-  serviceId: string;
-  service: IService;
-  slotId: string;
-  slot: ITimeSlot;
-  reviews: IReview[];
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
+  classScheduleId: IClassSchedule | string;
+  userId: IUser | string;
+  date: string;
+  createdAt: IUser | string;
+  updatedAt: IUser | string;
 }
 
-export interface IFeedback {
-  id: string;
-  comment: string;
-  isSelected: boolean;
-  customerId: string;
-  customer: ICustomer[];
-  createdAt: string;
-  updatedAt: string;
-  __v?: number;
-}
