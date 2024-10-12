@@ -27,7 +27,7 @@ const CreateBooking = () => {
       const [classSchedules, setClassSchedules] = useState<IClassSchedule[] | []>([]);
       const [classScheduleId, setClassScheduleId] = useState<string>("");
       const [formError, setFormInputError] = useState<FormInputErrorType>(null);
-      const { toast } = useToast()
+      const { toast } = useToast();
 
       const query: Record<string, any> = {};
 

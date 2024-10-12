@@ -26,6 +26,7 @@ export const authApi = baseApi.injectEndpoints({
             accessToken: result.data.accessToken,
             user: {
               userId: userInfo?.userId,
+              name: userInfo?.name,
               email: userInfo?.email,
               role: userInfo?.role,
             },
@@ -54,6 +55,7 @@ export const authApi = baseApi.injectEndpoints({
             accessToken: result.data.accessToken,
             user: {
               userId: userInfo?.userId,
+              name: userInfo?.name,
               email: userInfo?.email,
               role: userInfo?.role,
             },

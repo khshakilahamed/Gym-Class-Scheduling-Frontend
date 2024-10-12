@@ -25,6 +25,7 @@ const DMenu = () => {
         accessToken: "",
         user: {
           userId: "",
+          name: "",
           email: "",
           role: "",
         },

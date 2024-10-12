@@ -35,6 +35,7 @@ export type ApiError = {
 // Define the user type with your custom fields
 export type UserInfo = {
   userId?: string;
+  name?: string,
   email?: string;
   role?: string;
 } | null;
