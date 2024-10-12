@@ -10,10 +10,9 @@ export const storeUserInfo = ({ accessToken }: { accessToken: string }) => {
 };
 
 export const getUserInfo = (): UserInfo | null => {
-  console.log("get User Info function");
   const authToken = getFromLocalStorage(authKey);
-  console.log("get User Info function - access token", authToken);
-  if (authToken) {
+  // if (authToken) {
+  if (authToken && authToken !== 'undefined' && authToken !== '') {
     const decodedData = decodedToken(authToken);
     return decodedData;
   } else {

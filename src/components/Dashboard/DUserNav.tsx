@@ -20,8 +20,25 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useAppDispatch } from "@/redux/hook";
+import { userLoggedOut } from "@/redux/slices/authSlice";
 
 export function DUserNav() {
+  const dispatch = useAppDispatch();
+
+  const handleSignOut = () => {
+    dispatch(
+      userLoggedOut({
+        accessToken: "",
+        user: {
+          userId: "",
+          email: "",
+          role: "",
+        },
+      })
+    );
+  };
+
   return (
     <DropdownMenu>
       <TooltipProvider disableHoverableContent>
@@ -68,7 +85,10 @@ export function DUserNav() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem className="hover:cursor-pointer" onClick={() => {}}>
+        <DropdownMenuItem
+          className="hover:cursor-pointer"
+          onClick={handleSignOut}
+        >
           <LogOut className="w-4 h-4 mr-3 text-muted-foreground" />
           Sign out
         </DropdownMenuItem>

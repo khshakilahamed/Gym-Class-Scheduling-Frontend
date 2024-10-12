@@ -22,7 +22,7 @@ interface CollapseMenuButtonProps {
   icon: LucideIcon | ComponentType<{ className?: string }>;
   label: string;
   active: boolean;
-  submenus: Submenu[];
+  submenus?: Submenu[];
 }
 
 export function DCollapseMenuButton({
@@ -31,8 +31,8 @@ export function DCollapseMenuButton({
   active,
   submenus,
 }: CollapseMenuButtonProps) {
-  const isSubmenuActive = submenus.some((submenu) => submenu.active);
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(isSubmenuActive);
+  const isSubmenuActive = submenus?.some((submenu) => submenu.active);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(isSubmenuActive ?? false);
 
   return (
     <Collapsible
@@ -71,7 +71,7 @@ export function DCollapseMenuButton({
         </Button>
       </CollapsibleTrigger>
       <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
-        {submenus.map(({ href, label, active }, index) => (
+        {submenus?.map(({ href, label, active }, index) => (
           <Button
             key={index}
             variant={active ? "secondary" : "ghost"}

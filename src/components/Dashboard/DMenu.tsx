@@ -10,10 +10,27 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { DCollapseMenuButton } from "./DCollapseMenuButton";
 import { getDMenuList } from "@/constants/DMenuList";
+import { useAppDispatch, useAppSelector } from "@/redux/hook";
+import { userLoggedOut } from "@/redux/slices/authSlice";
 
 const DMenu = () => {
+  const userInfo = useAppSelector((state) => state.auth);
   const pathname = usePathname();
-  const menuList = getDMenuList(pathname);
+  const menuList = getDMenuList(pathname, userInfo.user.role);
+  const dispatch = useAppDispatch();
+
+  const handleSignOut = () => {
+    dispatch(
+      userLoggedOut({
+        accessToken: "",
+        user: {
+          userId: "",
+          email: "",
+          role: "",
+        },
+      })
+    );
+  };
 
   return (
     <ScrollArea className="[&>div>div[style]]:!block">
@@ -27,7 +44,7 @@ const DMenu = () => {
                 </p>
               )}
               {menus.map(({ href, label, icon: Icon, active, submenus }, i) =>
-                submenus.length === 0 ? (
+                submenus?.length === 0 ? (
                   <div className="w-full" key={i}>
                     <TooltipProvider disableHoverableContent>
                       <Tooltip delayDuration={100}>
@@ -77,7 +94,7 @@ const DMenu = () => {
               <Tooltip delayDuration={100}>
                 <TooltipTrigger asChild>
                   <Button
-                    onClick={() => {}}
+                    onClick={handleSignOut}
                     variant="outline"
                     className="w-full justify-center h-10 mt-5"
                   >
