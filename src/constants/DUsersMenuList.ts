@@ -1,3 +1,4 @@
+import { StackIcon } from "@radix-ui/react-icons";
 import { LayoutGrid, Plus, BarChart, Timer, User, User2, UserCircle } from "lucide-react";
 
 export const traineeMenuList = (pathname: string) => {
@@ -146,6 +147,18 @@ export const adminMenuList = (pathname: string) => {
           label: "Trainees",
           active: pathname.includes("/dashboard/admin/trainees"),
           icon: User2,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "Bookings",
+      menus: [
+        {
+          href: "/dashboard/admin/all-bookings",
+          label: "All Bookings",
+          active: pathname.includes("/dashboard/admin/all-Bookings"),
+          icon: StackIcon,
           submenus: [],
         },
       ],

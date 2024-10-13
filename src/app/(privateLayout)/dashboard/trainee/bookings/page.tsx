@@ -89,6 +89,7 @@ const MyBookings = () => {
             <TableHead>Title</TableHead>
             <TableHead>Day</TableHead>
             <TableHead>Time</TableHead>
+            <TableHead>Duration</TableHead>
             <TableHead>Trainers</TableHead>
             <TableHead>Status</TableHead>
             <TableHead className="text-right">Action</TableHead>
@@ -115,15 +116,28 @@ const MyBookings = () => {
                       : "N/A"}
                   </TableCell>
                   <TableCell className={`font-medium ${booking?.isCancel && "line-through"}`}>
-                    {typeof booking.classScheduleId === "object" &&
-                      typeof booking.classScheduleId.timeSlotId === "object"
-                      ? booking.classScheduleId.timeSlotId.startingTime
-                      : "N/A"}
-                    -
-                    {typeof booking.classScheduleId === "object" &&
-                      typeof booking.classScheduleId.timeSlotId === "object"
-                      ? booking.classScheduleId.timeSlotId.endingTime
-                      : "N/A"}
+                    {
+                      typeof booking.classScheduleId === "object" &&
+                      (typeof booking.classScheduleId.timeSlotId === "object"
+                        ?
+                        <>
+                          {booking.classScheduleId.timeSlotId.startingTime} - {booking.classScheduleId.timeSlotId.endingTime}
+                        </>
+                        : "N/A"
+                      )
+                    }
+                  </TableCell>
+                  <TableCell>
+                    {
+                      typeof booking.classScheduleId === "object" &&
+                      (typeof booking.classScheduleId.timeSlotId === "object"
+                        ?
+                        <>
+                          {booking.classScheduleId.duration} Hour/'s
+                        </>
+                        : "N/A"
+                      )
+                    }
                   </TableCell>
                   <TableCell className={`font-medium ${booking?.isCancel && "line-through"}`}>
                     {typeof booking.classScheduleId === "object"
