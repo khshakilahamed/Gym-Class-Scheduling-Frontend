@@ -95,7 +95,7 @@ const CreateTimeSlot = () => {
                         onSubmit={handleSubmit}
                   >
                         <div>
-                              <Label className="text-lg">Name:</Label>
+                              <Label className="text-lg">Starting Time:</Label>
                               <Input
                                     type="time"
                                     name="startingTime"
@@ -112,7 +112,7 @@ const CreateTimeSlot = () => {
                                     )}
                         </div>
                         <div>
-                              <Label className="text-lg">Name:</Label>
+                              <Label className="text-lg">Ending Time:</Label>
                               <Input
                                     type="time"
                                     name="endingTime"

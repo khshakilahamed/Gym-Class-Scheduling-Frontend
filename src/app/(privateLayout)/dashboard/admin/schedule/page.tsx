@@ -1,10 +1,14 @@
 "use client";
 
+import DeleteDialog from '@/components/shared/DeleteDialog';
+import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useClassSchedulesQuery } from '@/redux/api/scheduleApi';
+import { useToast } from '@/hooks/use-toast';
+import { useClassSchedulesQuery, useDeleteClassScheduleMutation } from '@/redux/api/scheduleApi';
 import { IClassSchedule } from '@/types/global';
 import { Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
 type ISchedule = {
       sunday?: IClassSchedule[];
@@ -17,12 +21,15 @@ type ISchedule = {
 }
 
 const ClassSchedules = () => {
-      let schedules: ISchedule = {}
+      let schedules: ISchedule = {};
+      const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
+      const [deleteItemId, setDeleteItemId] = useState<string>("");
+      const { toast } = useToast();
 
-      const { data, isLoading } = useClassSchedulesQuery({size: 1000});
-
-      console.log(data);
+      const { data, isLoading } = useClassSchedulesQuery({ size: 1000 });
       const classSchedules = data?.classSchedules;
+
+      const [deleteClassSchedule, { isLoading: isDeleteClassScheduleLoading }] = useDeleteClassScheduleMutation();
 
       if (Array.isArray(classSchedules)) {
             classSchedules.forEach((schedule: IClassSchedule) => {
@@ -32,16 +39,60 @@ const ClassSchedules = () => {
                         [day]: schedules[day] ? [...schedules[day]!, schedule] : [schedule],
                   };
             });
+      };
+
+      const handleDelete = async (id: string) => {
+            try {
+                  const res = await deleteClassSchedule(id).unwrap();
+
+                  if (res) {
+                        toast({
+                              title: `✅ Successfully deleted`,
+                        })
+                  }
+            } catch (error: any) {
+                  toast({
+                        title: `❌ ${error?.data?.message}`,
+                  })
+            }
       }
+
+      // Dialog close handler
+      const handleCloseDialog = () => {
+            setDeleteItemId("");
+            setIsDialogOpen(false);
+      };
+
+      // Delete confirm
+      const handleDeleteConfirm = () => {
+            handleDelete(deleteItemId);
+            setIsDialogOpen(false);
+      };
 
       // Helper function to render schedule content for each day
       const renderScheduleForDay = (day: keyof ISchedule) => (
             <TableCell className="font-medium">
                   {schedules[day] &&
                         schedules[day]!.map((classSchedule: IClassSchedule) => (
-                              <p key={classSchedule._id}>
+                              <p key={classSchedule._id} className='my-1'>
                                     {typeof classSchedule.timeSlotId === 'object' &&
                                           `${classSchedule.timeSlotId.startingTime} - ${classSchedule.timeSlotId.endingTime}`}
+                                    <Button
+                                          className='bg-red-600 p-2 m-0'
+                                          onClick={() => {
+                                                setDeleteItemId(classSchedule._id);
+                                                setIsDialogOpen(true);
+                                          }}
+                                          disabled={isDeleteClassScheduleLoading && deleteItemId === classSchedule?._id}
+                                    >
+                                          {
+                                                (isDeleteClassScheduleLoading && deleteItemId === classSchedule?._id) ?
+                                                      <Loader2
+                                                            className="mr-2 h-4 w-4 animate-spin"
+                                                      />
+                                                      : "X"
+                                          }
+                                    </Button>
                               </p>
                         ))}
             </TableCell>
@@ -82,6 +133,13 @@ const ClassSchedules = () => {
                               )}
                         </TableBody>
                   </Table>
+
+                  <DeleteDialog
+                        isDialogOpen={isDialogOpen}
+                        setIsDialogOpen={setIsDialogOpen}
+                        handleCloseDialog={handleCloseDialog}
+                        handleDeleteConfirm={handleDeleteConfirm}
+                  />
             </div>
       );
 };
