@@ -14,6 +14,7 @@ import { storeUserInfo } from "@/services/auth.service";
 import { ApiError } from "@/types/global";
 import { useRouter } from "next/navigation";
 import useUserRedirect from "@/hooks/useUserRedirect";
+import { useToast } from "@/hooks/use-toast";
 
 interface LoginData {
   email: string;
@@ -34,6 +35,7 @@ const LoginPage = () => {
   const [formError, setFormInputError] = useState<FormInputErrorType>(null);
   const [error, setError] = useState("");
   const router = useRouter();
+  const { toast } = useToast();
 
   const [userLogin, { error: loginError, isLoading }] = useUserLoginMutation();
 
@@ -83,6 +85,9 @@ const LoginPage = () => {
       if (res?.accessToken) {
         storeUserInfo({ accessToken: res?.accessToken });
         setFormData({ ...initialLoginData });
+        toast({
+          title: `✅ Successfully Logged in`,
+        })
         router.push("/dashboard");
       }
 

@@ -12,6 +12,8 @@ import { storeUserInfo } from "@/services/auth.service";
 import { useUserRegisterMutation } from "@/redux/api/authApi";
 import { ApiError } from "@/types/global";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { useToast } from "@/hooks/use-toast";
 
 const initialRegistrationData = {
   email: "",
@@ -28,6 +30,8 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({ ...initialRegistrationData });
   const [formError, setFormInputError] = useState<FormInputErrorType>(null);
   const [error, setError] = useState("");
+  const router = useRouter();
+  const {toast} = useToast();
 
   const [userRegister, { error: loginError, isLoading }] =
     useUserRegisterMutation();
@@ -82,6 +86,10 @@ const RegisterPage = () => {
       if (res?.accessToken) {
         storeUserInfo({ accessToken: res?.accessToken });
         setFormData({ ...initialRegistrationData });
+        toast({
+          title: `✅ Successfully Registered`,
+        })
+        router.push("/dashboard");
       }
 
       // eslint-disable-next-line @typescript-eslint/no-explicit-any

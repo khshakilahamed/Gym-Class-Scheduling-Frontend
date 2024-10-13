@@ -28,7 +28,21 @@ yarn dev
 npm run dev
 ```
 
+### User credentials
 ```
+// Admin
+Email: admin@admin.com
+Password: admin12
+
+// Trainer
+Email: trainer@trainer.com
+Password: trainer12
+
+// Trainee
+Email: trainee@trainee.com
+Password: trainee12
+```
+
 ### ER Diagram [Click Me](https://drive.google.com/file/d/14HRVRY1f443zaUQKPO0yJA5NM7DCHVwv/view?usp=sharing)
 
 ![Alt text](/ER-diagram.png)
