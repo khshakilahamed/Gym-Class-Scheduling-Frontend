@@ -6,12 +6,12 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Select, SelectContent, SelectGroup, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Separator } from '@/components/ui/separator';
 import { USER_ROLE } from '@/constants/userRole';
 import { useToast } from '@/hooks/use-toast';
 import { useCreateClassScheduleMutation } from '@/redux/api/scheduleApi';
-import { useCreateTimeSlotMutation, useTimeSlotsQuery } from '@/redux/api/timeSlotApi';
+import { useTimeSlotsQuery } from '@/redux/api/timeSlotApi';
 import { useUsersQuery } from '@/redux/api/userApi';
 import { daysOfWeek } from '@/utils/daysOfWeek';
 import { Loader2 } from 'lucide-react';
@@ -54,10 +54,10 @@ const CreateSchedule = () => {
       // console.log(formData);
 
       useEffect(() => {
-            setFormData({
-                  ...formData,
+            setFormData((prevFormData) => ({
+                  ...prevFormData,
                   trainers: trainers
-            })
+            }));
       }, [trainers]);
 
       //   get input value

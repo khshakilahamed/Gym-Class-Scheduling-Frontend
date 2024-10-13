@@ -12,12 +12,11 @@ import {
       TableHeader,
       TableRow,
 } from "@/components/ui/table";
-import { useBookingsQuery, useCancelBookingMutation, useMyBookingsQuery } from "@/redux/api/bookingApi";
+import { useBookingsQuery } from "@/redux/api/bookingApi";
 import { useDebounced } from "@/redux/hook";
 import { IBooking, IMeta } from "@/types/global";
 import { calculateRange } from "@/utils/range-calculator";
-import { ChevronLeft, ChevronRight, Edit2, Loader2, Trash2 } from "lucide-react";
-import Link from "next/link";
+import { ChevronLeft, ChevronRight, Loader2 } from "lucide-react";
 import { useState } from "react";
 
 const AllBookings = () => {
@@ -46,9 +45,6 @@ const AllBookings = () => {
       const { data, isLoading } = useBookingsQuery({ ...query });
       const bookings = data?.bookings as IBooking[];
       const meta = data?.meta as IMeta;
-
-      // console.log(bookings);
-      const [cancelBooking, { isLoading: isCancelLoading }] = useCancelBookingMutation();
 
       const totalPage = Math.ceil(meta?.total / size);
 
@@ -133,7 +129,7 @@ const AllBookings = () => {
                                                                   (typeof booking.classScheduleId.timeSlotId === "object"
                                                                         ?
                                                                         <>
-                                                                              {booking.classScheduleId.duration} Hour/'s
+                                                                              {booking.classScheduleId.duration} Hour/&lsquo;s
                                                                         </>
                                                                         : "N/A"
                                                                   )

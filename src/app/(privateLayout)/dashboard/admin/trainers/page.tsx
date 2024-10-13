@@ -16,12 +16,11 @@ import {
       TableRow,
 } from "@/components/ui/table";
 import { USER_ROLE } from "@/constants/userRole";
-import { useCancelBookingMutation, useMyBookingsQuery } from "@/redux/api/bookingApi";
 import { useUsersQuery } from "@/redux/api/userApi";
 import { useDebounced } from "@/redux/hook";
-import { IBooking, IMeta, IUser } from "@/types/global";
+import { IMeta, IUser } from "@/types/global";
 import { calculateRange } from "@/utils/range-calculator";
-import { ChevronLeft, ChevronRight, Edit2, Loader2, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Edit2, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -34,7 +33,7 @@ const AllTrainers = () => {
       const [sortOrder] = useState<string>("");
       const [searchTerm, setSearchTerm] = useState<string>("");
       const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
-      const [deleteItemId, setDeleteItemId] = useState<string>("");
+      const [, setDeleteItemId] = useState<string>("");
 
       query["limit"] = size;
       query["page"] = page;

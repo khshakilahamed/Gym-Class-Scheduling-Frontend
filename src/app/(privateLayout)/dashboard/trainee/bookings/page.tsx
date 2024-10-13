@@ -133,7 +133,7 @@ const MyBookings = () => {
                       (typeof booking.classScheduleId.timeSlotId === "object"
                         ?
                         <>
-                          {booking.classScheduleId.duration} Hour/'s
+                          {booking.classScheduleId.duration} Hour/&lsquo;s
                         </>
                         : "N/A"
                       )

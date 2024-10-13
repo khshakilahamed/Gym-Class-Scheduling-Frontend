@@ -50,10 +50,18 @@ const ClassSchedules = () => {
                               title: `✅ Successfully deleted`,
                         })
                   }
-            } catch (error: any) {
-                  toast({
-                        title: `❌ ${error?.data?.message}`,
-                  })
+            } catch (error: unknown) {
+                  // Type guard to check if error has 'data' and 'message' properties
+                  if (typeof error === 'object' && error !== null && 'data' in error && (error as { data: { message: string } }).data) {
+                        const errorMessage = (error as { data: { message: string } }).data.message || 'An unexpected error occurred';
+                        toast({
+                              title: `❌ ${errorMessage}`,
+                        });
+                  } else {
+                        toast({
+                              title: `❌ An unexpected error occurred`,
+                        });
+                  }
             }
       }
 

@@ -1,13 +1,11 @@
 "use client";
 
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { USER_ROLE } from '@/constants/userRole';
 import { useToast } from '@/hooks/use-toast';
-import { useCreateTrainerMutation, useUpdateUserMutation, useUserQuery } from '@/redux/api/userApi';
+import { useUpdateUserMutation, useUserQuery } from '@/redux/api/userApi';
 import { Loader2 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 
@@ -21,7 +19,7 @@ type IFormData = {
       email: string
 }
 
-const EditUser = ({ params }: { params: any }) => {
+const EditUser = ({ params }: { params: { id: string } }) => {
       const { id } = params;
       const initialFormData: IFormData = {
             name: "",
@@ -92,11 +90,18 @@ const EditUser = ({ params }: { params: any }) => {
                         setFormData({ ...initialFormData });
                   }
 
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            } catch (error: any) {
-                  toast({
-                        title: `❌ ${error?.data?.message}`,
-                  })
+            } catch (error: unknown) {
+                  // Type guard to check if error has 'data' and 'message' properties
+                  if (typeof error === 'object' && error !== null && 'data' in error && (error as { data: { message: string } }).data) {
+                        const errorMessage = (error as { data: { message: string } }).data.message || 'An unexpected error occurred';
+                        toast({
+                              title: `❌ ${errorMessage}`,
+                        });
+                  } else {
+                        toast({
+                              title: `❌ An unexpected error occurred`,
+                        });
+                  }
             }
       };
 
