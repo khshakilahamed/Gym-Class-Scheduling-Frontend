@@ -2,8 +2,6 @@
 import Profile from "@/components/Profile/Profile";
 
 const TraineeProfile = () => {
-
-
       return (
             <div>
                   <Profile />

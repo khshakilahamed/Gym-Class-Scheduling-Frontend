@@ -35,3 +35,32 @@ export const traineeMenuList = (pathname: string) => {
     },
   ];
 };
+
+export const trainerMenuList = (pathname: string) => {
+  return [
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/dashboard/trainer/profile",
+          label: "Profile",
+          active: pathname.includes("/dashboard/trainer/profile"),
+          icon: LayoutGrid,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "Schedule",
+      menus: [
+        {
+          href: "/dashboard/trainer/schedule",
+          label: "My Schedules",
+          active: pathname.includes("/dashboard/trainee/schedule"),
+          icon: BarChart,
+          submenus: [],
+        },
+      ],
+    },
+  ];
+};

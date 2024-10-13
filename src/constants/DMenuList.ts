@@ -1,7 +1,7 @@
 import { LucideIcon } from "lucide-react";
 import { ComponentType } from "react";
 import { USER_ROLE } from "./userRole";
-import { traineeMenuList } from "./DUsersMenuList";
+import { traineeMenuList, trainerMenuList } from "./DUsersMenuList";
 
 type Submenu = {
   href: string;
@@ -31,6 +31,9 @@ export function getDMenuList(
   switch (userRole) {
     case USER_ROLE.trainee:
       menuList = traineeMenuList(pathname);
+      break;
+    case USER_ROLE.trainer:
+      menuList = trainerMenuList(pathname);
       break;
   }
 
