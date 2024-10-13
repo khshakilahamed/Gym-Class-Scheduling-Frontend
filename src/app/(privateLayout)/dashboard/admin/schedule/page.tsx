@@ -2,7 +2,7 @@
 
 import { Separator } from '@/components/ui/separator';
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { useTrainerClassScheduleQuery } from '@/redux/api/scheduleApi';
+import { useClassSchedulesQuery } from '@/redux/api/scheduleApi';
 import { IClassSchedule } from '@/types/global';
 import { Loader2 } from 'lucide-react';
 
@@ -16,13 +16,16 @@ type ISchedule = {
       saturday?: IClassSchedule[];
 }
 
-const TrainerSchedule = () => {
+const ClassSchedules = () => {
       let schedules: ISchedule = {}
 
-      const { data, isLoading } = useTrainerClassScheduleQuery(null);
+      const { data, isLoading } = useClassSchedulesQuery({size: 1000});
 
-      if (Array.isArray(data)) {
-            data.forEach((schedule: IClassSchedule) => {
+      console.log(data);
+      const classSchedules = data?.classSchedules;
+
+      if (Array.isArray(classSchedules)) {
+            classSchedules.forEach((schedule: IClassSchedule) => {
                   const day = schedule.day.toLowerCase() as keyof ISchedule; // Assert that `day` is a valid key
                   schedules = {
                         ...schedules,
@@ -83,4 +86,4 @@ const TrainerSchedule = () => {
       );
 };
 
-export default TrainerSchedule;
+export default ClassSchedules;

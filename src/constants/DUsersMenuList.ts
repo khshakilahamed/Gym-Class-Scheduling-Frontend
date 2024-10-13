@@ -1,4 +1,4 @@
-import { LayoutGrid, Plus, BarChart } from "lucide-react";
+import { LayoutGrid, Plus, BarChart, Timer, TimerIcon } from "lucide-react";
 
 export const traineeMenuList = (pathname: string) => {
   return [
@@ -58,6 +58,54 @@ export const trainerMenuList = (pathname: string) => {
           label: "My Schedules",
           active: pathname.includes("/dashboard/trainee/schedule"),
           icon: BarChart,
+          submenus: [],
+        },
+      ],
+    },
+  ];
+};
+
+export const adminMenuList = (pathname: string) => {
+  return [
+    {
+      groupLabel: "",
+      menus: [
+        {
+          href: "/dashboard/admin/profile",
+          label: "Profile",
+          active: pathname.includes("/dashboard/trainer/profile"),
+          icon: LayoutGrid,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "Schedule",
+      menus: [
+        {
+          href: "/dashboard/admin/schedule",
+          label: "Schedules",
+          active: pathname.includes("/dashboard/trainee/schedule"),
+          icon: BarChart,
+          submenus: [],
+        },
+      ],
+    },
+    {
+      groupLabel: "Time Slot",
+      menus: [
+        {
+          href: "/dashboard/admin/timeslot",
+          label: "Time Slots",
+          active: pathname.includes("/dashboard/trainee/timeslot"),
+          icon: Timer,
+          submenus: [],
+        },
+        {
+          href: "/dashboard/admin/create-timeslot",
+          label: "Create Time Slot",
+          active: pathname.includes("/dashboard/trainee/create-timeslot"),
+          icon: TimerIcon,
           submenus: [],
         },
       ],
