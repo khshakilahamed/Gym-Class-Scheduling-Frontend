@@ -17,7 +17,7 @@ const TimeSlots = () => {
       const { toast } = useToast();
 
       const { data, isLoading } = useTimeSlotsQuery({ size: 100 });
-      console.log(data);
+      // console.log(data);
       const timeSlots = data?.timeSlots;
 
       const [deleteTimeSlot, { isLoading: isDeleteLoading }] = useDeleteTimeSlotMutation();
@@ -89,7 +89,7 @@ const TimeSlots = () => {
                                                       <TableCell className="space-x-2 text-right">
                                                             {/* Edit Button */}
                                                             <Link
-                                                                  href={`/dashboard/edit-meal-category/${timeSlot?._id}`}
+                                                                  href={`/dashboard/admin/timeslot/edit-timeslot/${timeSlot?._id}`}
                                                             // className={`${timeSlot?.isCancel && "hidden"}`}
                                                             >
                                                                   <Button

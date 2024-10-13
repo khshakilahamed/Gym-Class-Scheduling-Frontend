@@ -12,16 +12,17 @@ import { IoHomeOutline } from "react-icons/io5";
 export function DBreadcrumb({ pathname }: { pathname: string }) {
   const paths: string[] = [];
   const breadcrumbItems = pathname
-    .split("/")
-    .slice(1)
-    .map((item) => {
-      paths.push(`/${item}`);
-      return {
-        key: paths.join().replace(",", ""),
-        label: item,
-        href: paths.join().replace(",", ""),
-      };
-    });
+  .split("/")
+  .slice(1)
+  .map((item) => {
+    paths.push(`/${item}`);
+    return {
+      key: paths.join(''),  // Use '' as the separator
+      label: item,
+      href: paths.join(''),  // Use '' as the separator
+    };
+  });
+
 
   return (
     <Breadcrumb>
