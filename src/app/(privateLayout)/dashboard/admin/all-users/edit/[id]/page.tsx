@@ -38,7 +38,6 @@ const EditUser = ({ params }: { params: any }) => {
 
       useEffect(() => {
             if (data && isInitial) {
-                  console.log(data);
                   setFormData({
                         name: data?.name,
                         email: data?.email,
